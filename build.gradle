@@ -11,7 +11,7 @@ plugins {
 }
 
 dependencies {
-    implementation 'software.amazon.awssdk:s3:2.1.4'
+    implementation 'software.amazon.awssdk:s3:2.2.0'
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:23.0'
