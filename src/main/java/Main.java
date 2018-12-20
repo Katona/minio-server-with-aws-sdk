@@ -1,8 +1,10 @@
+import java.io.File;
 import java.net.URI;
 import java.util.UUID;
 
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.core.sync.ResponseTransformer;
 import software.amazon.awssdk.services.s3.S3Client;
 
 /*
@@ -32,7 +34,9 @@ public class Main {
         s3Client.createBucket(builder -> builder.bucket(bucketName));
         try {
             s3Client.putObject(builder -> builder.bucket(bucketName).key("key"), RequestBody.fromString("sdf"));
+            s3Client.getObject(builder -> builder.bucket(bucketName).key("key"), ResponseTransformer.toFile(new File("./response.txt")));
         } finally {
+            s3Client.deleteObject(builder -> builder.bucket(bucketName).key("key"));
             s3Client.deleteBucket(builder -> builder.bucket(bucketName));
         }
     }
